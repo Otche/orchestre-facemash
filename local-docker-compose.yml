@@ -1,5 +1,16 @@
 version: "3"
 services:
+  back-facemash:
+    depends_on:
+      - mongodb
+    build:
+      context: .
+      dockerfile: ./local-docker/local-back-facemash.Dockerfile
+    restart: always
+    volumes:
+      - "../back-facemash:/back-facemash"
+    ports:
+      - "3000:3000"
   mongodb:
     image: mongo:latest
     environment:
