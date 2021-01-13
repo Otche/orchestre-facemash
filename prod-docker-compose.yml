@@ -1,0 +1,39 @@
+version: "3"
+services:
+  front-facemash:
+    depends_on:
+      - back-facemash
+    build:
+      context: .
+      dockerfile: ./prod-docker/prod-front-facemash.Dockerfile
+    restart: always
+    volumes:
+      - "../front-facemash:/front-facemash"
+    ports:
+      - "4101:3000"
+  back-facemash:
+    depends_on:
+      - mongodb
+    build:
+      context: .
+      dockerfile: ./prod-docker/prod-back-facemash.Dockerfile
+    restart: always
+    volumes:
+      - "../back-facemash:/back-facemash"
+    ports:
+      - "4100:3000"
+  mongodb:
+    build:
+      context: .
+      dockerfile: ./prod-docker/prod-mongo-facemash.Dockerfile
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 47017:27017
+    volumes:
+      - prod_mongodb_data:/data/db
+
+volumes:
+  prod_mongodb_data:
+    driver: local
