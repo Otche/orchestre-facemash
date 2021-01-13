@@ -23,16 +23,17 @@ services:
     ports:
       - "3100:3000"
   mongodb:
-    image: mongo:latest
+    build:
+      context: .
+      dockerfile: ./local-docker/local-mongo-facemash.Dockerfile
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: rootpassword
     ports:
-      - 27017:27017
+      - 37017:27017
     volumes:
-      - mongodb_data:/data/db
-      - "./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:"
+      - local_mongodb_data:/data/db
 
 volumes:
-  mongodb_data:
+  local_mongodb_data:
     driver: local

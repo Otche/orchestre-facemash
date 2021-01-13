@@ -1,0 +1,1 @@
+mongo -u root -p rootpassword /db/facemash-db-init.js
